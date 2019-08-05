@@ -31,11 +31,11 @@
         <H1>Super Heroes</H1>
         </div>
         <label for="codigo">Digite un codigo de Super Heroe</label>
-        <input type="text" class="form-control" id="cosa" aria-describedby="textHelp" placeholder="Ingrese Codigo">
+        <input type="text" class="form-control" id="cosa2" aria-describedby="textHelp" placeholder="Ingrese Codigo">
         <label for="buscar">Busca tu favorito</label>
         <p></p>
 
-        <button type="button" class="btn btn-primary" id="consultar">Consultar</button>
+        <button type="button" class="btn btn-primary" id="consultar" onclick="recoger()">Consultar</button>
 
         <div id="heores">
 
@@ -44,7 +44,56 @@
 
     </div>
 
-<script src="api.js"></script>
+<script>
+
+var token = 2179678172154837;
+
+
+function recoger(){
+
+var heroe = document.getElementById("consultar").value;
+var link = "https://www.superheroapi.com/api.php/2179678172154837/"+heroe+"";
+var nombre="";
+var ocupacion="";
+var genero="";
+var raza="";
+var imagen="";
+
+console.log(link);
+
+fetch(link)
+.then (function (response){
+    return response.json();
+})
+.then (function(cosa){
+    console.log(cosa);
+
+    nombre="<p> Nombre: "+ cosa.name+"</p>";
+    console.log(nombre)
+
+    ocupacion= "<p> ocupacion: "+ cosa.work.occupation+"</p>"; 
+    console.log(ocupacion);
+
+    genero= "<p> genero: "+ cosa.appearance.gender+"</p>";  
+    console.log(genero);
+
+    raza= "<p> raza: "+ cosa.appearance.race+"</p>";  
+    console.log(raza);
+    
+    imagen="<img src='" + cosa.image.url + "'width='100px' heigth='100px' " + "id=" + "'imagen'" + ">";
+
+    document.getElementById("heores").innerHTML+=ocupacion;
+    document.getElementById("heores").innerHTML+=nombre;
+    document.getElementById("heores").innerHTML+=genero;
+    document.getElementById("heores").innerHTML+=raza;
+    document.getElementById("heores").innerHTML+=imagen;
+    document.getElementById("heores").innerHTML+="<p> <h1> </h1></p>";
+    
+})
+
+}
+
+</script>
 
     
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
