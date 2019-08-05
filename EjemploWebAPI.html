@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Paises</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        h1, h2, button{
+            text-align: center;
+        }
+    
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+            <h1>Los paises del mundo</h1>
+           
+            <h2 class="alert alert-primary" role="alert">
+                 Las ciudades capitales
+            </h2>
+            <button type="button" class="btn btn-primary" id="btn">Cargar los paises del mundo </button>
+           
+            <div id="datospaises">
+
+
+            </div>
+    </div>
+    
+    
+    <script>
+        var botoncargar = document.getElementById("btn");
+        botoncargar.addEventListener("click", cargarPaises);
+        function cargarPaises(){
+            fetch("https://restcountries.eu/rest/v2/all")
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(data){
+                var divel = document.getElementById("datospaises");
+                var htmlcoderow = "";
+                var htmlcodecol = "";
+                htmlcoderow = "<div class='row'>";
+                for (let index = 0; index < data.length; index++) {
+                                        
+                    htmlcodecol = "<div class='col-md-2'>"
+                    htmlcodecol +=" <div class='card bg-light mb-3' style='max-width: 18rem;'>"
+                    htmlcodecol +="<div class='card-header'>"+ data[index].name +"</div>"
+                    htmlcodecol +="<div class='card-body'>"
+                    htmlcodecol +="<h5 class='card-title'>"+ data[index].capital +"</h5>"
+                    htmlcodecol +="<p class='card-text'> <a href='https://es.wikipedia.org/wiki/"+ data[index].name +"' target='_blank'> <img src='"+ data[index].flag +"' width='100px' heigth='100px'   />  </a>  </p>"
+                    htmlcodecol +="</div>"
+                    htmlcodecol +="</div>"
+                    htmlcodecol +="</div>"
+                    htmlcoderow += htmlcodecol
+                    console.log(htmlcodecol +" iteración:  "+ index);
+                    if (((index + 1) % 6 === 0) && (index!=0)){
+                        
+                        htmlcoderow += "</div>";
+                        console.log(htmlcoderow + "Cambio para otra fila");
+                        divel.innerHTML += htmlcoderow;
+                        htmlcoderow = "<div class='row'>";
+                    }
+                             
+               }
+                             
+                })
+            
+        }
+      
+        
+               
+    </script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
